@@ -1,4 +1,4 @@
-#import python executable module trans_hi_to_en tobe used in practical example
+#import python code executable module trans_hi_to_en tobe used in practical example
 
 import trans_hi_to_en
 import numpy as np
