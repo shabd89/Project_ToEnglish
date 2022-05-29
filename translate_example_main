@@ -1,0 +1,62 @@
+#import python executable module trans_hi_to_en tobe used in practical example
+
+import trans_hi_to_en
+import numpy as np
+import matplotlib as plt
+import pandas as pd
+
+#name of Hindi-Brahmic text.
+HINDI = 'hindi'
+
+#name of English-Roman Text.
+ENGLISH = 'en'
+
+SCHEMES = {}
+
+#dataset of an example
+
+dataset = pd.read_excel("C:/Users/Dell/Desktop/School.xlsx")
+
+#dataset local copy
+
+Test = dataset.copy()
+
+#Take all the object columns where Hindi text might be used
+columns = ['child_first_name','child_middle_name',
+'child_Last_name','Father_first_name','Father_Middle_name','Father_Last_name','Mother_first_name','Mother_Middle_name',
+'Mother_last_name']
+
+
+
+
+
+# Iterate over columns
+# only from the copied dataframe ->Test
+for column in Test[columns]:
+    #fill blank swith NaN
+    Test[column].fillna('NaN',inplace = True)
+    
+#fill remaining few cases of empty fields in all the  attribute columns of Test df
+    for i,name in Test.iterrows():
+        if Test.loc[i,column].strip() == '':
+            Test.loc[i,column] = 'NaN'
+            
+ #Two loops used here.outer will interate over rows and inner will interate over all the columns of selected rown in outer loop
+ 
+ for j,name in Test.iterrows():
+    for column in Test[columns]:
+        #transhinditoenglish is developed translator from Hindi text to English Text(not in language but in text)
+        translate_text = trans_hi_to_en.transhinditoenglish(Test.loc[j,column],HINDI,ENGLISH) 
+        Test.loc[j,column] = translate_text
+        #print(translate_text)
+    
+    #translated row will be converted in a dataframe and single dataframe record will be written in a csv file , each time
+    df = pd.DataFrame(Test.loc[j]).T
+    df.to_csv('NewStudent.csv', mode='a', index=False, header=False)
+ 
+ 
+#To send me a WhatsApp message using python script
+from pywhatkit import sendwhatmsg
+sendwhatmsg( phone_no='+91XXXXXXXXX',
+    message='Hey Mate!your code exceucted.Check output')
+            
