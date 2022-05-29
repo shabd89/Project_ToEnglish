@@ -37,7 +37,7 @@ class SchemeMap(object):
     #REUSED this same from https://github.com/orgs/sanskrit
 
     """Maps one :class:`Scheme` to another. This class grabs the metadata and
-    character data required for :func:`transliterate`.
+    character data required for :func:`transhinditoenglish`.
     :param from_scheme: the source scheme
     :param to_scheme: the destination scheme
     """
@@ -76,9 +76,9 @@ def _roman(data, scheme_map, **kw):
 
     #REUSED this same from https://github.com/orgs/sanskrit
 
-    """Transliterate `data` with the given `scheme_map`. This function is used
+    """Translate `data` with the given `scheme_map`. This function is used
     when the source scheme is a Roman scheme.
-    :param data: the data to transliterate
+    :param data: the data to translate
     :param scheme_map: a dict that maps between characters in the old scheme
                        and characters in the new scheme
     """
@@ -102,9 +102,9 @@ def _roman(data, scheme_map, **kw):
     len_data = len(data)
     append = buf.append
 
-    # If true, don't transliterate. The toggle token is discarded.
+    # If true, don't translate. The toggle token is discarded.
     toggled = False
-    # If true, don't transliterate. The suspend token is retained.
+    # If true, don't translate. The suspend token is retained.
     # `suspended` overrides `toggled`.
     suspended = False
 
@@ -179,13 +179,13 @@ def _roman(data, scheme_map, **kw):
     return ''.join(buf)
 
 
-#I have changed the the _brahmic function as per my requirement of transliterate script 
+#I have changed the the _brahmic function as per my requirement of translate script 
 #Specially to remove extra A in the end of each tranliterated word 
 
 def _brahmic(data, scheme_map, **kw):
-    """Transliterate `data` with the given `scheme_map`. This function is used
+    """Translate `data` with the given `scheme_map`. This function is used
     when the source scheme is a Brahmic scheme.
-    :param data: the data to transliterate
+    :param data: the data to translate
     :param scheme_map: a dict that maps between characters in the old scheme
                        and characters in the new scheme
     """
@@ -227,22 +227,22 @@ def _brahmic(data, scheme_map, **kw):
 
 
 
-#I had changed the the _brahmic function as per my requirement of transliterate script 
+#I had changed the the _brahmic function as per my requirement of translate script 
 
-def transliterate(data, _from=None, _to=None, scheme_map=None, **kw):
+def transhinditoenglish(data, _from=None, _to=None, scheme_map=None, **kw):
     
     #Chnaged the mapping of Hindi to English characters as per my understanding  of matter 
     #Also, added other consanants,vowels & marks from DEVANAGARI 
 
-    """Transliterate `data` with the given parameters::
-        output = transliterate('idam adbhutam', HK, DEVANAGARI)
+    """Translate `data` with the given parameters::
+        output = transhinditoenglish('idam adbhutam', HK, DEVANAGARI)
     Each time the function is called, a new :class:`SchemeMap` is created
     to map the input scheme to the output scheme. This operation is fast
     enough for most use cases. But for higher performance, you can pass a
     pre-computed :class:`SchemeMap` instead::
         scheme_map = SchemeMap(SCHEMES[HK], SCHEMES[DEVANAGARI])
-        output = transliterate('idam adbhutam', scheme_map=scheme_map)
-    :param data: the data to transliterate
+        output = transhinditoenglish('idam adbhutam', scheme_map=scheme_map)
+    :param data: the data to translate
     :param _from: the name of a source scheme
     :param _to: the name of a destination scheme
     :param scheme_map: the :class:`SchemeMap` to use. If specified, ignore
